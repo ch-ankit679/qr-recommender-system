@@ -344,7 +344,7 @@ def build_frontend(records: list[dict[str, Any]], query: str, is_demo: bool) -> 
   </section>
   <div class="workspace">
     <section class="feed-column">
-      <div class="feed-toolbar"><div><div class="feed-title">Recommended videos</div><div class="feed-subtitle" id="feedSubtitle">Results for your topic · all available videos loaded</div></div><div class="feed-controls"><span class="status-chip" id="modeChip">Balanced mix</span></div></div>
+      <div class="feed-toolbar"><div><div class="feed-title">Recommended videos</div><div class="feed-subtitle" id="feedSubtitle">Results for your topic · all available videos loaded</div></div></div>
       <div class="feed-list" id="feed" aria-live="off"></div>
       <div class="footnote">Experimental ranking prototype · not affiliated with YouTube.</div>
     </section>
@@ -400,7 +400,6 @@ el('shownCount').textContent = '0';
 el('viewedCount').textContent = '0';
 el('modeName').textContent=MODE.balanced.label;
 el('modeRowTitle').textContent=MODE.balanced.title;
-el('modeChip').textContent=MODE.balanced.chip;
 el('modeCopy').textContent=MODE.balanced.copy;
 el('modeVelocity').textContent='Steady pace';
 updateSpeedDisplay(0,'Scroll to adapt');
@@ -691,7 +690,6 @@ function setMode(modeName, source='Live scroll', reportedSpeed=null){
   const mode = MODE[modeName];
   el('modeName').textContent = mode.label;
   el('modeRowTitle').textContent = mode.title;
-  el('modeChip').textContent = mode.chip;
   el('modeCopy').textContent = mode.copy;
   el('modeVelocity').textContent = modeName==='slow'?'Relaxed pace':modeName==='fast'?'Fast pace':'Steady pace';
   updateSpeedDisplay(reportedSpeed ?? state.smoothedSpeed, source==='Guided demo'?'DEMO SIGNAL':state.direction);
@@ -702,7 +700,6 @@ function setMode(modeName, source='Live scroll', reportedSpeed=null){
   proofStatus.classList.add('attention');
   el('signalState').textContent = source==='Guided demo' ? 'Demo running' : 'Re-ranking full feed';
   el('lastMixChange').textContent = `${source} · ${MODE[previousMode].label} → ${mode.label}\nRe-ranking all ${VIDEOS.length} cards, including viewed and near-reader items…`;
-  el('modeChip').classList.add('feed-updating');
 
   const reorder = reorderEntireFeed(modeName, () => {
     // A newer transition may have superseded this callback while it was animating.
@@ -717,7 +714,6 @@ function setMode(modeName, source='Live scroll', reportedSpeed=null){
     el('lastMixChange').textContent = `${source} · ${MODE[previousMode].label} → ${mode.label}\n${movementText}; the entire feed was eligible, including viewed cards.\n${mixTextLine}.`;
     addActivity(`${source}: ${MODE[previousMode].label} → ${mode.label}; ${reorder.moved}/${VIDEOS.length} card positions changed; ${beforeMix} → ${afterMix}`, source==='Guided demo'?'demo':'normal');
     el('signalState').textContent = source==='Guided demo' ? 'Demo running' : 'Mode updated';
-    window.setTimeout(() => el('modeChip').classList.remove('feed-updating'), 650);
     window.setTimeout(() => {
       if(transitionToken === state.transitionToken && !state.demoRunning){
         el('signalState').textContent = 'Listening';
