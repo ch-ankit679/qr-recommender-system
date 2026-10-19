@@ -94,8 +94,8 @@ qr-recommender-system/
 
 ### 1. Clone the repository
 
-``` bash
-git clone <YOUR_GITHUB_REPOSITORY_URL>
+```
+git clone https://github.com/ch-ankit679/qr-recommender-system
 cd qr-recommender-system
 ```
 
