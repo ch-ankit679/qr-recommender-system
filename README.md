@@ -99,9 +99,6 @@ git clone https://github.com/ch-ankit679/qr-recommender-system
 cd qr-recommender-system
 ```
 
-Replace `<YOUR_GITHUB_REPOSITORY_URL>` with the URL of your GitHub
-repository.
-
 ### 2. Create and activate a virtual environment (recommended)
 
 **Windows PowerShell**
